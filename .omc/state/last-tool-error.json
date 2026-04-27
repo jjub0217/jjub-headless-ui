@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"cd ~/Desktop/jjub-headless-ui && npm publish 2>&1\",\"description\":\"Publish to npm with 2FA\"}",
-  "error": "Exit code 1\nnpm notice\nnpm notice 📦  jjub-headless-ui@0.1.0\nnpm notice Tarball Contents\nnpm notice 25.2kB dist/index.d.mts\nnpm notice 25.2kB dist/index.d.ts\nnpm notice 71.7kB dist/index.js\nnpm notice 185.6kB dist/index.js.map\nnpm notice 69.4kB dist/index.mjs\nnpm notice 185.5kB dist/index.mjs.map\nnpm notice 1.4kB package.json\nnpm notice Tarball Details\nnpm notice name: jjub-headless-ui\nnpm notice version: 0.1.0\nnpm notice filename: jjub-headless-ui-0.1.0.tgz\nnpm notice package size: 80.5 kB\nnpm ...",
-  "timestamp": "2026-04-27T06:40:24.003Z",
-  "retry_count": 1
-}
