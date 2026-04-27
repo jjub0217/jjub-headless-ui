@@ -4,37 +4,37 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # jjub-headless-ui
 
-Headless UI components with built-in accessibility. Unstyled, customizable, WAI-ARIA compliant.
+웹 접근성이 내장되고 스타일 커스터마이징이 가능한 Headless UI 컴포넌트 라이브러리입니다.
 
-## What is Headless UI?
+## Headless UI란?
 
-Headless UI components provide **logic and accessibility** without any visual styles.
-You bring your own styles via `className` or `data-state` attributes.
+로직과 접근성만 제공하고, 스타일은 포함하지 않는 컴포넌트입니다.
+`className` 또는 `data-state` 속성으로 자유롭게 스타일을 적용할 수 있습니다.
 
-- **Zero styles** — no colors, fonts, or spacing included
-- **Full accessibility** — WAI-ARIA roles, keyboard navigation, focus management
-- **Customizable** — style with CSS, Tailwind, CSS-in-JS, or any approach
-- **Zero dependencies** — only React as peer dependency
-- **TypeScript-first** — full type definitions included
+- **스타일 없음** — 색상, 폰트, 간격이 포함되어 있지 않음
+- **접근성 내장** — WAI-ARIA 역할, 키보드 네비게이션, 포커스 관리
+- **자유로운 스타일링** — CSS, Tailwind, CSS-in-JS 등 어떤 방식이든 사용 가능
+- **의존성 없음** — React만 peer dependency
+- **TypeScript 지원** — 전체 타입 정의 포함
 
-## Components (19)
+## 컴포넌트 (19개)
 
-| Category | Components |
+| 카테고리 | 컴포넌트 |
 |---|---|
-| Navigation | Tabs, NavigationMenu |
-| Overlay | Dialog, AlertDialog, Drawer, Popover, Menu |
-| Input | Select, RadioGroup, CheckboxGroup, Toggle, TagInput |
-| Feedback | Toast, Progress |
-| Layout | Accordion, Toolbar |
-| Misc | Avatar, Label, FileUpload |
+| 탐색 | Tabs, NavigationMenu |
+| 오버레이 | Dialog, AlertDialog, Drawer, Popover, Menu |
+| 입력 | Select, RadioGroup, CheckboxGroup, Toggle, TagInput |
+| 피드백 | Toast, Progress |
+| 레이아웃 | Accordion, Toolbar |
+| 기타 | Avatar, Label, FileUpload |
 
-## Installation
+## 설치
 
 ```bash
 npm install jjub-headless-ui
 ```
 
-## Quick Start
+## 빠른 시작
 
 ```tsx
 import { Tabs } from 'jjub-headless-ui'
@@ -43,32 +43,35 @@ function App() {
   return (
     <Tabs.Root defaultValue="tab1">
       <Tabs.List>
-        <Tabs.Tab value="tab1">Tab 1</Tabs.Tab>
-        <Tabs.Tab value="tab2">Tab 2</Tabs.Tab>
+        <Tabs.Tab value="tab1">탭 1</Tabs.Tab>
+        <Tabs.Tab value="tab2">탭 2</Tabs.Tab>
       </Tabs.List>
-      <Tabs.Panel value="tab1">Content 1</Tabs.Panel>
-      <Tabs.Panel value="tab2">Content 2</Tabs.Panel>
+      <Tabs.Panel value="tab1">첫 번째 탭 내용</Tabs.Panel>
+      <Tabs.Panel value="tab2">두 번째 탭 내용</Tabs.Panel>
     </Tabs.Root>
   )
 }
 ```
 
-## Styling with data-state
+## data-state로 스타일링
 
-All components expose `data-state` attributes for CSS styling:
+모든 컴포넌트는 `data-state` 속성을 제공합니다:
 
 ```css
+/* 활성 탭 */
 [role="tab"][data-state="active"] {
   font-weight: bold;
 }
+
+/* 비활성 탭 */
 [role="tab"][data-state="inactive"] {
   color: gray;
 }
 ```
 
-## Links
+## 링크
 
 - [npm](https://www.npmjs.com/package/jjub-headless-ui)
 - [GitHub](https://github.com/jjub0217/jjub-headless-ui)
 
-Browse the components in the sidebar to see live examples and usage patterns.
+왼쪽 사이드바에서 각 컴포넌트를 클릭하면 사용 예시를 확인할 수 있습니다.
