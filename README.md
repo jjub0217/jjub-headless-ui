@@ -80,6 +80,65 @@ Style with your preferred CSS approach:
 | **Label** | Accessible label with `htmlFor` linking | [Docs](https://jjub0217.github.io/jjub-headless-ui/?path=/docs/label--docs) |
 | **Toolbar** | Toolbar container with arrow key navigation | [Docs](https://jjub0217.github.io/jjub-headless-ui/?path=/docs/toolbar--docs) |
 | **NavigationMenu** | Navigation landmark with `aria-current` support | [Docs](https://jjub0217.github.io/jjub-headless-ui/?path=/docs/navigationmenu--docs) |
+| **Bubble** | Pretext 기반 채팅 버블 (tightWidth 계산으로 fit-content의 데드 스페이스 제거) | [Docs](https://jjub0217.github.io/jjub-headless-ui/?path=/docs/bubble--docs) |
+
+### Bubble — Chat Layout 사용 예시
+
+`Bubble`은 Pretext의 산수 계산으로 텍스트에 딱 맞는 너비를 적용하는 채팅 버블 컴포넌트. `align-self`로 좌·우 정렬해서 받은/보낸 메시지를 표현할 수 있음.
+
+```jsx
+import { Bubble } from 'jjub-headless-ui'
+
+const recvStyle = {
+  padding: '8px 12px',
+  borderRadius: '16px 16px 16px 4px',
+  font: '15px / 20px "Helvetica Neue", Helvetica, Arial, sans-serif',
+  background: '#22c55e',
+  color: 'white',
+  marginBottom: '8px',
+}
+
+const sentStyle = {
+  ...recvStyle,
+  background: '#6b7280',
+  borderRadius: '16px 16px 4px 16px',
+  alignSelf: 'flex-end',
+}
+
+export function Chat() {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '12px',
+        background: '#1c1c1e',
+        borderRadius: '14px',
+      }}
+    >
+      <Bubble text="안녕하세요! 오늘 날씨가 정말 좋네요." style={recvStyle} />
+      <Bubble
+        text="내일 같이 카페 가실래요? 새로 생긴 곳이 있는데 분위기가 정말 좋다고 해요."
+        style={sentStyle}
+      />
+      <Bubble
+        text="주소는 서울특별시 강남구 테헤란로 123번길 45 카페드림 2층입니다."
+        style={recvStyle}
+      />
+      <Bubble text="좋아요! 몇 시에 만날까요?" style={sentStyle} />
+      <Bubble
+        text="3시쯤 어떨까요? 그 전에 점심도 같이 먹으면 좋을 것 같아요. 근처에 맛있는 파스타 집이 있거든요."
+        style={recvStyle}
+      />
+      <Bubble text="네 알겠습니다!" style={sentStyle} />
+      <Bubble
+        text="혹시 주차 가능한 곳인가요? 차를 가지고 갈까 고민 중이에요."
+        style={recvStyle}
+      />
+    </div>
+  )
+}
+```
 
 ## Accessibility
 

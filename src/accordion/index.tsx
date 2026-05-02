@@ -5,10 +5,13 @@ import {
   useCallback,
   useRef,
   useId,
+  useEffect,
   type ReactNode,
   type KeyboardEvent,
   type ComponentPropsWithoutRef,
+  type CSSProperties,
 } from 'react'
+import { prepare, layout } from '@chenglou/pretext'
 
 // ─── Context ──────────────────────────────────────────────
 interface AccordionContextValue {
@@ -298,6 +301,86 @@ function Content({ forceMount = false, children, className, style, ...contentPro
   )
 }
 
+// ─── Accordion.PretextContent ─────────────────────────────
+// Content와 같은 역할이지만 height transition을 Pretext로 계산.
+// children이 string이면 Pretext가 텍스트 폭/높이를 산수로 측정 (forced reflow 0회).
+// children이 JSX이면 DOM의 scrollHeight로 fallback 측정 (1회 reflow).
+interface PretextContentProps extends ComponentPropsWithoutRef<'div'> {
+  forceMount?: boolean
+  /** Pretext가 layout 계산에 사용할 최대 너비. 미지정 시 컨테이너의 offsetWidth를 마운트 시 1회 측정. */
+  maxWidth?: number
+  /** 텍스트 wrapper(inner div)에 적용할 스타일. padding/font/color 등 텍스트 측정·렌더링에 영향을 주는 스타일은 여기에 둠. */
+  innerStyle?: CSSProperties
+  /** 텍스트 wrapper(inner div)에 적용할 className. */
+  innerClassName?: string
+  children: ReactNode
+}
+
+function PretextContent({
+  forceMount = false,
+  maxWidth,
+  innerStyle,
+  innerClassName,
+  children,
+  className,
+  style,
+  ...contentProps
+}: PretextContentProps) {
+  const { isOpen, triggerId, contentId } = useItemContext()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null)
+  const [contentHeight, setContentHeight] = useState<number | null>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    const inner = innerRef.current
+    if (!container || !inner) return
+
+    const targetWidth = maxWidth ?? container.offsetWidth
+    const text = typeof children === 'string' ? children : null
+
+    if (text !== null) {
+      // Pretext path — string children
+      const cs = getComputedStyle(inner)
+      const font = cs.font
+      const lineHeight = parseFloat(cs.lineHeight) || 22.4
+      const paddingV =
+        parseFloat(cs.paddingTop || '0') + parseFloat(cs.paddingBottom || '0')
+
+      const handle = prepare(text, font)
+      const result = layout(handle, targetWidth, lineHeight)
+      setContentHeight(result.height + paddingV)
+    } else {
+      // DOM fallback — JSX children
+      setContentHeight(inner.scrollHeight)
+    }
+  }, [children, maxWidth])
+
+  return (
+    <div
+      ref={containerRef}
+      role="region"
+      id={contentId}
+      aria-labelledby={triggerId}
+      aria-hidden={!isOpen}
+      data-state={isOpen ? 'open' : 'closed'}
+      className={className}
+      style={{
+        overflow: 'hidden',
+        height:
+          isOpen && contentHeight !== null ? `${contentHeight}px` : '0px',
+        transition: 'height 400ms cubic-bezier(0.87, 0, 0.13, 1)',
+        ...style,
+      }}
+      {...contentProps}
+    >
+      <div ref={innerRef} className={innerClassName} style={innerStyle}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
 // ─── Export ───────────────────────────────────────────────
 export const Accordion = {
   Root,
@@ -305,4 +388,5 @@ export const Accordion = {
   Header,
   Trigger,
   Content,
+  PretextContent,
 }

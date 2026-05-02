@@ -54,3 +54,6 @@ export { Toolbar } from './toolbar'
 
 // Navigation Menu
 export { NavigationMenu } from './navigation-menu'
+
+// Bubble (Pretext 기반 채팅 버블)
+export { Bubble } from './bubble'
